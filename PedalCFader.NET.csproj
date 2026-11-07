@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Pedal C-fader.NET</AssemblyName>
+    <RootNamespace>WDE.PedalCFader</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+    <NoWarn>MSB3277</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="BuzzGUI.Interfaces">
+      <HintPath>C:\Program Files\ReBuzz\BuzzGUI.Interfaces.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <!-- Global (MachineAdded), MenuItemVM, SimpleCommand -->
+    <Reference Include="BuzzGUI.Common">
+      <HintPath>C:\Program Files\ReBuzz\BuzzGUI.Common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Effect: deploy the dll only to Gear\Effects. A running ReBuzz holds the dll
+       open and the copy fails silently - check the version in About after deploy. -->
+  <Target Name="DeployToReBuzz" AfterTargets="Build">
+    <Message Text="Deploying $(TargetFileName) -> C:\Program Files\ReBuzz\Gear\Effects\" Importance="high" />
+    <Copy SourceFiles="$(TargetPath)"
+          DestinationFolder="C:\Program Files\ReBuzz\Gear\Effects\"
+          ContinueOnError="true" />
+  </Target>
+
+</Project>
